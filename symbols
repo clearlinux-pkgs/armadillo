@@ -1,5 +1,6 @@
 libarmadillo.so.10:_ZN4arma15H5check_versionEjjj
 libarmadillo.so.10:_ZN4arma6H5openEv
+libarmadillo.so.10:_ZTHN4arma19mt19937_64_instanceE
 libarmadillo.so.10:_ZTHN4arma23arma_rng_cxx11_instanceE
 libarmadillo.so.10:arma_H5Dclose
 libarmadillo.so.10:arma_H5Dcreate
