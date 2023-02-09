@@ -4,7 +4,7 @@
 #
 Name     : armadillo
 Version  : 11.4.4
-Release  : 60
+Release  : 61
 URL      : https://sourceforge.net/projects/arma/files/armadillo-11.4.4.tar.xz
 Source0  : https://sourceforge.net/projects/arma/files/armadillo-11.4.4.tar.xz
 Summary  : Fast C++ matrix library with syntax similar to MATLAB and Octave
