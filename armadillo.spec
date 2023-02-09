@@ -4,7 +4,7 @@
 #
 Name     : armadillo
 Version  : 11.4.4
-Release  : 59
+Release  : 60
 URL      : https://sourceforge.net/projects/arma/files/armadillo-11.4.4.tar.xz
 Source0  : https://sourceforge.net/projects/arma/files/armadillo-11.4.4.tar.xz
 Summary  : Fast C++ matrix library with syntax similar to MATLAB and Octave
@@ -84,7 +84,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1675955239
+export SOURCE_DATE_EPOCH=1675961897
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -100,7 +100,7 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1675955239
+export SOURCE_DATE_EPOCH=1675961897
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/armadillo
 cp %{_builddir}/armadillo-%{version}/LICENSE.txt %{buildroot}/usr/share/package-licenses/armadillo/47b573e3824cd5e02a1a3ae99e2735b49e0256e4 || :
