@@ -4,10 +4,10 @@
 # Using build pattern: cmake
 #
 Name     : armadillo
-Version  : 12.2.0
-Release  : 65
-URL      : https://sourceforge.net/projects/arma/files/armadillo-12.2.0.tar.xz
-Source0  : https://sourceforge.net/projects/arma/files/armadillo-12.2.0.tar.xz
+Version  : 12.4.0
+Release  : 66
+URL      : https://sourceforge.net/projects/arma/files/armadillo-12.4.0.tar.xz
+Source0  : https://sourceforge.net/projects/arma/files/armadillo-12.4.0.tar.xz
 Summary  : Fast C++ matrix library with syntax similar to MATLAB and Octave
 Group    : Development/Tools
 License  : Apache-2.0
@@ -76,37 +76,58 @@ license components for the armadillo package.
 
 
 %prep
-%setup -q -n armadillo-12.2.0
-cd %{_builddir}/armadillo-12.2.0
+%setup -q -n armadillo-12.4.0
+cd %{_builddir}/armadillo-12.4.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1680617357
+export SOURCE_DATE_EPOCH=1685023908
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+%cmake ..
+make  %{?_smp_mflags}
+popd
+mkdir -p clr-build-avx2
+pushd clr-build-avx2
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -Wl,-z,x86-64-v3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd -march=x86-64-v3 "
+export FCFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd -march=x86-64-v3 "
+export FFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd -march=x86-64-v3 "
+export CXXFLAGS="$CXXFLAGS -O3 -Wl,-z,x86-64-v3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd -march=x86-64-v3 "
+export CFLAGS="$CFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
+export CXXFLAGS="$CXXFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
+export FFLAGS="$FFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
+export FCFLAGS="$FCFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
 %cmake ..
 make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1680617357
+export SOURCE_DATE_EPOCH=1685023908
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/armadillo
 cp %{_builddir}/armadillo-%{version}/LICENSE.txt %{buildroot}/usr/share/package-licenses/armadillo/47b573e3824cd5e02a1a3ae99e2735b49e0256e4 || :
+pushd clr-build-avx2
+%make_install_v3  || :
+popd
 pushd clr-build
 %make_install
 popd
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
@@ -120,6 +141,7 @@ popd
 
 %files dev
 %defattr(-,root,root,-)
+/V3/usr/lib64/libarmadillo.so
 /usr/include/armadillo
 /usr/include/armadillo_bits/BaseCube_bones.hpp
 /usr/include/armadillo_bits/BaseCube_meat.hpp
@@ -359,6 +381,7 @@ popd
 /usr/include/armadillo_bits/fn_trunc_log.hpp
 /usr/include/armadillo_bits/fn_unique.hpp
 /usr/include/armadillo_bits/fn_var.hpp
+/usr/include/armadillo_bits/fn_vecnorm.hpp
 /usr/include/armadillo_bits/fn_vectorise.hpp
 /usr/include/armadillo_bits/fn_wishrnd.hpp
 /usr/include/armadillo_bits/fn_zeros.hpp
@@ -540,6 +563,8 @@ popd
 /usr/include/armadillo_bits/op_misc_meat.hpp
 /usr/include/armadillo_bits/op_nonzeros_bones.hpp
 /usr/include/armadillo_bits/op_nonzeros_meat.hpp
+/usr/include/armadillo_bits/op_norm2est_bones.hpp
+/usr/include/armadillo_bits/op_norm2est_meat.hpp
 /usr/include/armadillo_bits/op_norm_bones.hpp
 /usr/include/armadillo_bits/op_norm_meat.hpp
 /usr/include/armadillo_bits/op_normalise_bones.hpp
@@ -606,6 +631,8 @@ popd
 /usr/include/armadillo_bits/op_unique_meat.hpp
 /usr/include/armadillo_bits/op_var_bones.hpp
 /usr/include/armadillo_bits/op_var_meat.hpp
+/usr/include/armadillo_bits/op_vecnorm_bones.hpp
+/usr/include/armadillo_bits/op_vecnorm_meat.hpp
 /usr/include/armadillo_bits/op_vectorise_bones.hpp
 /usr/include/armadillo_bits/op_vectorise_meat.hpp
 /usr/include/armadillo_bits/op_wishrnd_bones.hpp
@@ -686,6 +713,8 @@ popd
 /usr/include/armadillo_bits/spop_trimat_meat.hpp
 /usr/include/armadillo_bits/spop_var_bones.hpp
 /usr/include/armadillo_bits/spop_var_meat.hpp
+/usr/include/armadillo_bits/spop_vecnorm_bones.hpp
+/usr/include/armadillo_bits/spop_vecnorm_meat.hpp
 /usr/include/armadillo_bits/spop_vectorise_bones.hpp
 /usr/include/armadillo_bits/spop_vectorise_meat.hpp
 /usr/include/armadillo_bits/spsolve_factoriser_bones.hpp
@@ -735,8 +764,10 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
+/V3/usr/lib64/libarmadillo.so.12
+/V3/usr/lib64/libarmadillo.so.12.4.0
 /usr/lib64/libarmadillo.so.12
-/usr/lib64/libarmadillo.so.12.2.0
+/usr/lib64/libarmadillo.so.12.4.0
 
 %files license
 %defattr(0644,root,root,0755)
