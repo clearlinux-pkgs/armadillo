@@ -4,10 +4,10 @@
 # Using build pattern: cmake
 #
 Name     : armadillo
-Version  : 12.4.1
-Release  : 68
-URL      : https://sourceforge.net/projects/arma/files/armadillo-12.4.1.tar.xz
-Source0  : https://sourceforge.net/projects/arma/files/armadillo-12.4.1.tar.xz
+Version  : 12.6.0
+Release  : 69
+URL      : https://sourceforge.net/projects/arma/files/armadillo-12.6.0.tar.xz
+Source0  : https://sourceforge.net/projects/arma/files/armadillo-12.6.0.tar.xz
 Summary  : Fast C++ matrix library with syntax similar to MATLAB and Octave
 Group    : Development/Tools
 License  : Apache-2.0
@@ -76,15 +76,15 @@ license components for the armadillo package.
 
 
 %prep
-%setup -q -n armadillo-12.4.1
-cd %{_builddir}/armadillo-12.4.1
+%setup -q -n armadillo-12.6.0
+cd %{_builddir}/armadillo-12.6.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1686923656
+export SOURCE_DATE_EPOCH=1690206614
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -117,7 +117,7 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1686923656
+export SOURCE_DATE_EPOCH=1690206614
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/armadillo
 cp %{_builddir}/armadillo-%{version}/LICENSE.txt %{buildroot}/usr/share/package-licenses/armadillo/47b573e3824cd5e02a1a3ae99e2735b49e0256e4 || :
@@ -195,6 +195,8 @@ popd
 /usr/include/armadillo_bits/SpSubview_col_list_meat.hpp
 /usr/include/armadillo_bits/SpSubview_iterators_meat.hpp
 /usr/include/armadillo_bits/SpSubview_meat.hpp
+/usr/include/armadillo_bits/SpToDGlue_bones.hpp
+/usr/include/armadillo_bits/SpToDGlue_meat.hpp
 /usr/include/armadillo_bits/SpToDOp_bones.hpp
 /usr/include/armadillo_bits/SpToDOp_meat.hpp
 /usr/include/armadillo_bits/SpValProxy_bones.hpp
@@ -274,6 +276,7 @@ popd
 /usr/include/armadillo_bits/fn_cumsum.hpp
 /usr/include/armadillo_bits/fn_det.hpp
 /usr/include/armadillo_bits/fn_diagmat.hpp
+/usr/include/armadillo_bits/fn_diags_spdiags.hpp
 /usr/include/armadillo_bits/fn_diagvec.hpp
 /usr/include/armadillo_bits/fn_diff.hpp
 /usr/include/armadillo_bits/fn_dot.hpp
@@ -430,6 +433,8 @@ popd
 /usr/include/armadillo_bits/glue_solve_meat.hpp
 /usr/include/armadillo_bits/glue_times_bones.hpp
 /usr/include/armadillo_bits/glue_times_meat.hpp
+/usr/include/armadillo_bits/glue_times_misc_bones.hpp
+/usr/include/armadillo_bits/glue_times_misc_meat.hpp
 /usr/include/armadillo_bits/glue_toeplitz_bones.hpp
 /usr/include/armadillo_bits/glue_toeplitz_meat.hpp
 /usr/include/armadillo_bits/glue_trapz_bones.hpp
@@ -763,9 +768,9 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/libarmadillo.so.12.4.1
+/V3/usr/lib64/libarmadillo.so.12.6.0
 /usr/lib64/libarmadillo.so.12
-/usr/lib64/libarmadillo.so.12.4.1
+/usr/lib64/libarmadillo.so.12.6.0
 
 %files license
 %defattr(0644,root,root,0755)
