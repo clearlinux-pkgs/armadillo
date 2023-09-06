@@ -4,10 +4,10 @@
 # Using build pattern: cmake
 #
 Name     : armadillo
-Version  : 12.6.3
-Release  : 72
-URL      : https://sourceforge.net/projects/arma/files/armadillo-12.6.3.tar.xz
-Source0  : https://sourceforge.net/projects/arma/files/armadillo-12.6.3.tar.xz
+Version  : 12.6.4
+Release  : 73
+URL      : https://sourceforge.net/projects/arma/files/armadillo-12.6.4.tar.xz
+Source0  : https://sourceforge.net/projects/arma/files/armadillo-12.6.4.tar.xz
 Summary  : Fast C++ matrix library with syntax similar to MATLAB and Octave
 Group    : Development/Tools
 License  : Apache-2.0
@@ -76,15 +76,15 @@ license components for the armadillo package.
 
 
 %prep
-%setup -q -n armadillo-12.6.3
-cd %{_builddir}/armadillo-12.6.3
+%setup -q -n armadillo-12.6.4
+cd %{_builddir}/armadillo-12.6.4
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1693245894
+export SOURCE_DATE_EPOCH=1694008901
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -117,7 +117,7 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1693245894
+export SOURCE_DATE_EPOCH=1694008901
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/armadillo
 cp %{_builddir}/armadillo-%{version}/LICENSE.txt %{buildroot}/usr/share/package-licenses/armadillo/47b573e3824cd5e02a1a3ae99e2735b49e0256e4 || :
@@ -768,9 +768,9 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/libarmadillo.so.12.6.3
+/V3/usr/lib64/libarmadillo.so.12.6.4
 /usr/lib64/libarmadillo.so.12
-/usr/lib64/libarmadillo.so.12.6.3
+/usr/lib64/libarmadillo.so.12.6.4
 
 %files license
 %defattr(0644,root,root,0755)
