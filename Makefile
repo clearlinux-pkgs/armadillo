@@ -1,5 +1,5 @@
 PKG_NAME := armadillo
-URL = https://sourceforge.net/projects/arma/files/armadillo-12.6.4.tar.xz
+URL = https://sourceforge.net/projects/arma/files/armadillo-12.6.5.tar.xz
 ARCHIVES = 
 
 include ../common/Makefile.common
