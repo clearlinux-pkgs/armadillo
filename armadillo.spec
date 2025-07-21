@@ -6,10 +6,10 @@
 # autospec commit: 65cf152
 #
 Name     : armadillo
-Version  : 14.6.0
-Release  : 95
-URL      : https://sourceforge.net/projects/arma/files/armadillo-14.6.0.tar.xz
-Source0  : https://sourceforge.net/projects/arma/files/armadillo-14.6.0.tar.xz
+Version  : 14.6.1
+Release  : 96
+URL      : https://sourceforge.net/projects/arma/files/armadillo-14.6.1.tar.xz
+Source0  : https://sourceforge.net/projects/arma/files/armadillo-14.6.1.tar.xz
 Summary  : C++ library for linear algebra and scientific computing with MATLAB-like syntax
 Group    : Development/Tools
 License  : Apache-2.0
@@ -78,10 +78,10 @@ license components for the armadillo package.
 
 
 %prep
-%setup -q -n armadillo-14.6.0
-cd %{_builddir}/armadillo-14.6.0
+%setup -q -n armadillo-14.6.1
+cd %{_builddir}/armadillo-14.6.1
 pushd ..
-cp -a armadillo-14.6.0 buildavx2
+cp -a armadillo-14.6.1 buildavx2
 popd
 
 %build
@@ -89,7 +89,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1751469015
+export SOURCE_DATE_EPOCH=1753107557
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -152,7 +152,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1751469015
+export SOURCE_DATE_EPOCH=1753107557
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/armadillo
 cp %{_builddir}/armadillo-%{version}/LICENSE.txt %{buildroot}/usr/share/package-licenses/armadillo/47b573e3824cd5e02a1a3ae99e2735b49e0256e4 || :
@@ -828,9 +828,9 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/libarmadillo.so.14.6.0
+/V3/usr/lib64/libarmadillo.so.14.6.1
 /usr/lib64/libarmadillo.so.14
-/usr/lib64/libarmadillo.so.14.6.0
+/usr/lib64/libarmadillo.so.14.6.1
 
 %files license
 %defattr(0644,root,root,0755)
